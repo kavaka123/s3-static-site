@@ -28,5 +28,21 @@ EOF
     tags = var.tags
 
     force_destroy = true
+}
 
+
+resource "aws_s3_bucket_object" "webapp" {
+    acl = "public-read"
+    key = "index.html"
+    bucket = aws_s3_bucket.s3_bucket.id
+    content = file("${path.module}/www/index.html")
+    content_type  = "text/html"
+}
+
+resource "aws_s3_bucket_object" "error_file" {
+    acl = "public-read"
+    key = "error.html"
+    bucket = aws_s3_bucket.s3_bucket.id
+    content = file("${path.module}/www/error.html")
+    content_type = "text/html"
 }
